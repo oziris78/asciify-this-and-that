@@ -82,6 +82,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="imgui.ini" />
+    <Text Include="things_to_do.txt" />
   </ItemGroup>
 </Project>

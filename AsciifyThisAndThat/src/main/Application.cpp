@@ -17,10 +17,12 @@
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
 
+#include <imfilebrowser.h>
 
 
 Application::Application() {
     current_ascii = new std::string();
+    current_path = new std::string();
 }
 
 /*std::string path = "C:\\Users\\oguzh\\Desktop\\tom.jpg";
@@ -51,47 +53,27 @@ void Application::run() {
 #endif
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-    // Create window with graphics context
     GLFWwindow* window = glfwCreateWindow(800, 800, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
     if (window == NULL)
         exit(1);
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-
-    // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); 
     (void) io;
-
-    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    //ImGui::StyleColorsClassic();
-
-    // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
-
-    // Load Fonts
-    // - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
-    // - AddFontFromFileTTF() will return the ImFont* so you can store it if you need to select the font among multiple.
-    // - If the file cannot be loaded, the function will return NULL. Please handle those errors in your application (e.g. use an assertion, or display an error and quit).
-    // - The fonts will be rasterized at a given size (w/ oversampling) and stored into a texture when calling ImFontAtlas::Build()/GetTexDataAsXXXX(), which ImGui_ImplXXXX_NewFrame below will call.
-    // - Read 'docs/FONTS.md' for more instructions and details.
-    // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
-    //io.Fonts->AddFontDefault();
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
-    //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
-    //IM_ASSERT(font != NULL);
-
 
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
+
+    ImGui::FileBrowser fileDialog;
+    fileDialog.SetTitle("Choose an image");
+    fileDialog.SetTypeFilters({ ".jpg", ".jpeg", ".png" });
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -101,11 +83,11 @@ void Application::run() {
         ImGui::NewFrame();
 
         // MAIN CODE
-        // ImGui::ShowDemoWindow();
-
         if (ImGui::Begin("Path Window"))
         {
-            static char buf[100] = "";
+            static char* buf;
+            std::string s = std::string(*(this->current_path));
+            buf = &s[0];
             ImGui::InputText("  Image Path", buf, IM_ARRAYSIZE(buf));
             if (ImGui::Button("Create Ascii Art")) {
                 std::string* path = new std::string(buf);
@@ -113,9 +95,19 @@ void Application::run() {
                 this->current_ascii = s;
                 std::cout << *current_ascii << std::endl;
             }
+            ImGui::SameLine();
+            if (ImGui::Button(" Open File Chooser ")) {
+                fileDialog.Open();
+            }
         }
         ImGui::End();
 
+        fileDialog.Display();
+        if (fileDialog.HasSelected())
+        {
+            current_path = new std::string(fileDialog.GetSelected().string());
+            fileDialog.ClearSelected();
+        }
 
         if (ImGui::Begin("Result Window"))
         {

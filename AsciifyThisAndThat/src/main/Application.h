@@ -9,4 +9,5 @@ public:
 	void run();
 private:
 	std::string* current_ascii;
+	std::string* current_path;
 };

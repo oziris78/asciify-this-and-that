@@ -5,8 +5,8 @@
 
 namespace telek {
 
-    static const char* ASCII = "Ñ@#W$9876543210?!abc;:+=-,._   ";
-
-    static const int32_t CHAR_SET_SIZE = std::string(ASCII).size();
+    static std::string ASCII = std::string("Ñ@#W$9876543210?!abc;:+=-,._ ");
+    
+    static const int32_t CHAR_SET_SIZE = ASCII.size();
 
 }
