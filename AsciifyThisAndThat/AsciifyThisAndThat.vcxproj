@@ -190,6 +190,9 @@
   <ItemGroup>
     <Text Include="things_to_do.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\salsa.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

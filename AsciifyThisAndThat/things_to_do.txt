@@ -1,9 +1,5 @@
 ﻿
 
-1- Result window'un font'unu küçültme/büyültme için bir slider üstteki butonların sağına eklenecek
-2- üst window'da butonların arasına padding konulacak
 3- imgui.ini dosyası olmadan da güzel gözükmesini sağlamak için bir layout uygulanmalı
-4- daha güzel bir font düşünülebilir
-5- stb image ile otomatik resizing yapılmalı ki çok büyük olmasınlar
-	https://stackoverflow.com/questions/63958135/stbir-resize-uint8-crashing-on-memory-access
+4- exporting
 

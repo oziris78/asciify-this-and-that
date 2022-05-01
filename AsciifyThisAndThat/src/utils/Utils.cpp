@@ -12,10 +12,10 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <stb_image_write.h>
 
-/*
 #define STB_IMAGE_RESIZE_IMPLEMENTATION
 #include <stb_image_resize.h>
-*/
+
+
 
 namespace telek {
 
@@ -32,6 +32,18 @@ namespace telek {
 
         if (img == nullptr)
             return "Image file was not found";
+
+        // resize image down
+        static const double MAX_WIDTH = 90.0;
+        if (img_width >= MAX_WIDTH) {
+            double ratio = img_width / MAX_WIDTH;
+            int new_width = MAX_WIDTH;
+            int new_height = img_height / ratio;
+            stbir_resize_uint8(img, img_width, img_height, 0, img, new_width, new_height, 0, img_channels);
+            img_width = new_width;
+            img_height = new_height;
+            std::cout << "resized an image" << std::endl;
+        }
 
         // create a string using the image file
         uint8_t* p = img;

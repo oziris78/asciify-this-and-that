@@ -66,14 +66,22 @@ void Application::run() {
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
+
+    this->def_font = io.Fonts->AddFontDefault();
+    this->font = io.Fonts->AddFontFromFileTTF("assets\\salsa.ttf", 18.0f);
+    if (this->font == NULL || this->def_font == NULL) {
+        std::cout << "font could not be loaded" << std::endl;
+        exit(1);
+    }
+
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0, 0, 0, 1.00f);
 
+    // file chooser
     ImGui::FileBrowser fileDialog;
     fileDialog.SetTitle("Choose an image");
     fileDialog.SetTypeFilters({ ".jpg", ".jpeg", ".png" });
+
 
     // Main loop
     while (!glfwWindowShouldClose(window)) {
@@ -83,8 +91,8 @@ void Application::run() {
         ImGui::NewFrame();
 
         // MAIN CODE
-        if (ImGui::Begin("Path Window"))
-        {
+        ImGui::PushFont(this->font);
+        if (ImGui::Begin("Path Window")) {
             static char* buf;
             std::string s = std::string(*(this->current_path));
             buf = &s[0];
@@ -93,28 +101,32 @@ void Application::run() {
                 std::string* path = new std::string(buf);
                 std::string* s = new std::string(telek::get_ascifiied(*path));
                 this->current_ascii = s;
-                std::cout << *current_ascii << std::endl;
+                //std::cout << *current_ascii << std::endl;
+                std::cout << "created an ascii art" << std::endl;
             }
             ImGui::SameLine();
             if (ImGui::Button(" Open File Chooser ")) {
                 fileDialog.Open();
             }
+            ImGui::SameLine();
+            ImGui::SliderFloat("Font Size", &this->def_font->FontSize, 6.0f, 20.0f);
         }
         ImGui::End();
+        ImGui::PopFont();
 
         fileDialog.Display();
-        if (fileDialog.HasSelected())
-        {
+        if (fileDialog.HasSelected()) {
             current_path = new std::string(fileDialog.GetSelected().string());
             fileDialog.ClearSelected();
         }
 
-        if (ImGui::Begin("Result Window"))
-        {
+        ImGui::PushFont(this->def_font);
+        if (ImGui::Begin("Result Window")) {
             if (current_ascii->size() > 0) {
                 ImGui::InputTextMultiline("##", current_ascii->data(), current_ascii->size() + 1, ImVec2({-FLT_MIN, -FLT_MIN }));
             }
         }
+        ImGui::PopFont();
         ImGui::End();
 
 
@@ -140,43 +152,3 @@ void Application::run() {
 
 
 
-/*
-// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()!
-//You can browse its code to learn more about Dear ImGui!).
-if (show_demo_window)
-    ImGui::ShowDemoWindow(&show_demo_window);
-
-// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-{
-    static float f = 0.0f;
-    static int counter = 0;
-
-    ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-    ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-    ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-    ImGui::Checkbox("Another Window", &show_another_window);
-
-    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-    ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-    if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-        counter++;
-    ImGui::LabelText("a", "b");
-    ImGui::SameLine();
-    ImGui::Text("counter = %d", counter);
-
-    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    ImGui::End();
-}
-
-// 3. Show another simple window.
-if (show_another_window)
-{
-    ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-    ImGui::Text("Hello from another window!");
-    if (ImGui::Button("Close Me"))
-        show_another_window = false;
-    ImGui::End();
-}
-*/

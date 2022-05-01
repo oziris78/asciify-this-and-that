@@ -10,4 +10,6 @@ public:
 private:
 	std::string* current_ascii;
 	std::string* current_path;
+	ImFont* font;
+	ImFont* def_font;
 };
