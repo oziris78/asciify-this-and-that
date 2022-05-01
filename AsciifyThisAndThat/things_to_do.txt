@@ -1,5 +1,0 @@
-﻿
-
-3- imgui.ini dosyası olmadan da güzel gözükmesini sağlamak için bir layout uygulanmalı
-4- exporting
-

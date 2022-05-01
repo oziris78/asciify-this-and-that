@@ -42,7 +42,6 @@ namespace telek {
             stbir_resize_uint8(img, img_width, img_height, 0, img, new_width, new_height, 0, img_channels);
             img_width = new_width;
             img_height = new_height;
-            std::cout << "resized an image" << std::endl;
         }
 
         // create a string using the image file

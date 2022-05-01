@@ -82,9 +82,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="things_to_do.txt" />
+    <Font Include="assets\salsa.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="assets\salsa.ttf" />
+    <None Include="imgui.ini" />
   </ItemGroup>
 </Project>

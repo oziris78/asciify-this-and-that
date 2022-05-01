@@ -25,11 +25,6 @@ Application::Application() {
     current_path = new std::string();
 }
 
-/*std::string path = "C:\\Users\\oguzh\\Desktop\\tom.jpg";
-
-std::string ascii = telek::get_ascifiied(path);
-std::cout << ascii << std::endl;*/
-
 
 void Application::run() {
 
@@ -53,7 +48,7 @@ void Application::run() {
 #endif
     glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-    GLFWwindow* window = glfwCreateWindow(800, 800, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 800, "Asciify This & That", NULL, NULL);
     if (window == NULL)
         exit(1);
     glfwMakeContextCurrent(window);
@@ -96,13 +91,21 @@ void Application::run() {
             static char* buf;
             std::string s = std::string(*(this->current_path));
             buf = &s[0];
-            ImGui::InputText("  Image Path", buf, IM_ARRAYSIZE(buf));
+            struct Func {
+                static int MyCallback(ImGuiInputTextCallbackData* data) {
+                    if (data->EventFlag == ImGuiInputTextFlags_CallbackEdit) {
+                        std::string* curPath = (std::string*)data->UserData;
+                        *curPath = std::string(data->Buf);
+                        data->BufDirty = true;
+                    }
+                    return 0;
+                }
+            };
+            if (ImGui::InputText("  Image Path", buf, 100, ImGuiInputTextFlags_CallbackEdit, Func::MyCallback, (void*)this->current_path));
             if (ImGui::Button("Create Ascii Art")) {
                 std::string* path = new std::string(buf);
                 std::string* s = new std::string(telek::get_ascifiied(*path));
                 this->current_ascii = s;
-                //std::cout << *current_ascii << std::endl;
-                std::cout << "created an ascii art" << std::endl;
             }
             ImGui::SameLine();
             if (ImGui::Button(" Open File Chooser ")) {
@@ -149,6 +152,5 @@ void Application::run() {
     glfwDestroyWindow(window);
     glfwTerminate();
 }
-
 
 
