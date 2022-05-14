@@ -4,10 +4,16 @@ Image to ascii art convertor.
 
 Download the zip from the releases section and get the .exe file.  
 
+Used libraries:  
+  - <a href="https://github.com/ocornut/imgui"> ImGUI </a>
+  - <a href="https://github.com/glfw/glfw"> GLFW </a>
+  - <a href="https://github.com/nothings/stb"> stb-image </a>
+
+<br>
 
 # Example
 
-<img src="./repo_images/tom.jpg" alt="" width="500px">
+<img src="./repo_images/tom.jpg" alt="image couldn't be loaded" width="500px">
 
 
 ```
