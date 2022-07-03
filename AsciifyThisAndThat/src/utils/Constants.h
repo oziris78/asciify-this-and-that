@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-namespace telek {
+namespace twistral {
 
     static std::string ASCII = std::string("Ñ@#W$9876543210?!abc;:+=-,._ ");
     

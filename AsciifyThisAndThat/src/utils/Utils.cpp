@@ -17,7 +17,7 @@
 
 
 
-namespace telek {
+namespace twistral {
 
     std::string get_ascifiied(const std::string& image_path) {
         // check extension
@@ -54,8 +54,8 @@ namespace telek {
                 uint8_t blue = *(p + 2);
                 uint8_t average = (red + green + blue) / 3.0;
 
-                uint8_t char_index = floor(telek::map_range(average, 0, 255, 0, telek::CHAR_SET_SIZE));
-                result += telek::ASCII[char_index];
+                uint8_t char_index = floor(twistral::map_range(average, 0, 255, 0, twistral::CHAR_SET_SIZE));
+                result += twistral::ASCII[char_index];
 
                 // iterate to the next
                 p += img_channels;

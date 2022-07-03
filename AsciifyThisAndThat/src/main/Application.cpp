@@ -104,7 +104,7 @@ void Application::run() {
             if (ImGui::InputText("  Image Path", buf, 100, ImGuiInputTextFlags_CallbackEdit, Func::MyCallback, (void*)this->current_path));
             if (ImGui::Button("Create Ascii Art")) {
                 std::string* path = new std::string(buf);
-                std::string* s = new std::string(telek::get_ascifiied(*path));
+                std::string* s = new std::string(twistral::get_ascifiied(*path));
                 this->current_ascii = s;
             }
             ImGui::SameLine();
