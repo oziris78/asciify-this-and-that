@@ -16,8 +16,8 @@ Here's a list of used libraries:
 
 # Example
 
-<img src="./repo_images/my_pixel_art.png" alt="image couldn't be loaded" width="500px">
-<img src="./repo_images/my_pixel_art_ascii.png" alt="image couldn't be loaded" width="500px">
+<img src="/my_pixel_art.png" alt="image couldn't be loaded" width="500px">
+<img src="/my_pixel_art_ascii.png" alt="image couldn't be loaded" width="500px">
 
 
 # Licensing
